@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!-- This file is part of Tryton.  The COPYRIGHT file at the top level of
+this repository contains the full copyright notices and license terms. -->
+
+<!-- IVERSTA MODULE MAIN VIEW CONFIGURATION  -->
+<tryton>
+    <data>
+    <!-- Adding a custom icon -->>
+        <record model="ir.ui.icon" id="id-iversta-main-icon">
+            <field name="name">tryton-iversta-icon</field>
+            <field name="path">icons/rental-icon-iversta.svg</field>
+        </record>
+        <record model="ir.ui.icon" id="id-iversta-menu-icon">
+            <field name="name">cars-iversta-icon</field>
+            <field name="path">icons/photos-icon-iversta.svg</field>
+        </record>
+
+    <!-- Menus and submenus -->
+    <menuitem name="iVersta" sequence="2" id="id-menu-iversta" icon="tryton-iversta-icon"/>
+        <menuitem name="iVersta" parent="id-menu-iversta" id="id-menu-iversta-photos" icon="cars-iversta-icon"/> <!-- action="act_vehicle"/> -->
+
+     </data>
+ </tryton>
