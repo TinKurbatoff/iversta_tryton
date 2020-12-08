@@ -5,6 +5,82 @@ this repository contains the full copyright notices and license terms. -->
 <!-- IVERSTA MODULE MAIN VIEW CONFIGURATION  -->
 <tryton>
     <data>
+        <!-- ###################################### -->
+        <!-- # Asessment filling form description # -->
+        <!-- ###################################### -->
+        <record model="ir.ui.view" id="assessment_view_form">
+            <field name="model">iversta.assessment</field>
+            <field name="type">form</field>
+            <field name="name">assesment_form</field>
+        </record>
+
+        <!-- #################################### -->
+        <!-- # Asessment tree(list) description # -->
+        <!-- #################################### -->
+        <record model="ir.ui.view" id="assessment_view_list">
+            <field name="model">iversta.assessment</field>
+            <field name="type">tree</field>
+            <field name="name">assesment_list</field>
+        </record>
+
+        <!-- ##################################### -->
+        <!-- #  Images details form description  # -->
+        <!-- ##################################### -->
+        <record model="ir.ui.view" id="images_view_form">
+            <field name="model">iversta.image</field>
+            <field name="type">form</field>
+            <field name="name">images_form</field>
+        </record>
+
+        <!-- ################################### -->
+        <!-- #  Images tree(list) description  # -->
+        <!-- ################################### -->
+        <record model="ir.ui.view" id="images_view_list">
+            <field name="model">iversta.image</field>
+            <field name="type">tree</field>
+            <field name="name">images_list</field>
+        </record>
+
+
+        <!-- Open windows -->    
+        <!-- # Open window with vehicles -->
+        <record model="ir.action.act_window" id="act_assessment">
+                <field name="name">Assessments</field>
+                <field name="res_model">iversta.assessment</field>
+        </record>
+        <!-- # Open window with Schedule -->
+        <record model="ir.action.act_window" id="act_images">
+                <field name="name">Images</field>
+                <field name="res_model">iversta.image</field>
+        </record>
+
+        <!-- CONNECTS BUTTONS TO VIEWS  -->
+        <!-- Define views and switch by button between form/tree(i.e. list) -->
+        <record model="ir.action.act_window.view" id="act_assessments_view_list">
+                <field name="sequence" eval="10"/> 
+                <field name="view" ref="assessment_view_list"/>
+                <field name="act_window" ref="act_assessment"/>
+        </record>
+        <record model="ir.action.act_window.view" id="act_assessments_view_form">
+                <field name="sequence" eval="20"/>
+                <field name="view" ref="assessment_view_form"/>
+                <field name="act_window" ref="act_assessment"/>
+        </record>
+
+        <!-- CONNECTS BUTTONS TO VIEWS  -->
+        <!-- Define views and switch by button between form/tree(i.e. list) -->
+        <record model="ir.action.act_window.view" id="act_images_view_list">
+                <field name="sequence" eval="10"/> 
+                <field name="view" ref="images_view_list"/>
+                <field name="act_window" ref="act_images"/>
+        </record>
+        <record model="ir.action.act_window.view" id="act_images_view_form">
+                <field name="sequence" eval="20"/>
+                <field name="view" ref="images_view_form"/>
+                <field name="act_window" ref="act_images"/>
+        </record>
+
+
     <!-- Adding a custom icon -->>
         <record model="ir.ui.icon" id="id-iversta-main-icon">
             <field name="name">tryton-iversta-icon</field>
@@ -16,8 +92,8 @@ this repository contains the full copyright notices and license terms. -->
         </record>
 
     <!-- Menus and submenus -->
-    <menuitem name="iVersta" sequence="2" id="id-menu-iversta" icon="tryton-iversta-icon"/>
-        <menuitem name="iVersta" parent="id-menu-iversta" id="id-menu-iversta-photos" icon="cars-iversta-icon"/> <!-- action="act_vehicle"/> -->
-
+        <menuitem name="iVersta" sequence="2" id="id-menu-iversta" icon="tryton-iversta-icon"/>
+            <menuitem name="Checks" parent="id-menu-iversta" id="id-menu-iversta-cars" icon="cars-iversta-icon" action="act_assessment"/>
+            <menuitem name="All Images" parent="id-menu-iversta" id="id-menu-iversta-images" icon="cars-iversta-icon" action="act_images"/>
      </data>
  </tryton>

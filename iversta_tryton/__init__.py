@@ -2,12 +2,15 @@
 # this repository contains the full copyright notices and license terms.
 
 from trytond.pool import Pool
+from . import iversta_tryton as iversta
 
 __all__ = ['register']
 
 
 def register():
     Pool.register(
+        iversta.IverstaAssessments,
+        iversta.AssessmentImage,
         module='iversta_tryton', type_='model')
     Pool.register(
         module='iversta_tryton', type_='wizard')
