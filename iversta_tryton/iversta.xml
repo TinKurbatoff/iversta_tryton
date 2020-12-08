@@ -5,6 +5,7 @@ this repository contains the full copyright notices and license terms. -->
 <!-- IVERSTA MODULE MAIN VIEW CONFIGURATION  -->
 <tryton>
     <data>
+        <!-- -->
         <!-- ###################################### -->
         <!-- # Asessment filling form description # -->
         <!-- ###################################### -->
@@ -13,7 +14,6 @@ this repository contains the full copyright notices and license terms. -->
             <field name="type">form</field>
             <field name="name">assesment_form</field>
         </record>
-
         <!-- #################################### -->
         <!-- # Asessment tree(list) description # -->
         <!-- #################################### -->
@@ -31,7 +31,6 @@ this repository contains the full copyright notices and license terms. -->
             <field name="type">form</field>
             <field name="name">images_form</field>
         </record>
-
         <!-- ################################### -->
         <!-- #  Images tree(list) description  # -->
         <!-- ################################### -->
@@ -41,20 +40,42 @@ this repository contains the full copyright notices and license terms. -->
             <field name="name">images_list</field>
         </record>
 
+        <!-- ##################################### -->
+        <!-- #  Logins details form description  # -->
+        <!-- ##################################### -->
+        <record model="ir.ui.view" id="logins_view_form">
+            <field name="model">iversta.logins-to-app</field>
+            <field name="type">form</field>
+            <field name="name">logins_form</field>
+        </record>
+        <!-- ################################### -->
+        <!-- #  Logins tree(list) description  # -->
+        <!-- ################################### -->
+        <record model="ir.ui.view" id="logins_view_list">
+            <field name="model">iversta.logins-to-app</field>
+            <field name="type">tree</field>
+            <field name="name">logins_list</field>
+        </record>
 
         <!-- Open windows -->    
-        <!-- # Open window with vehicles -->
+        <!-- # Open window with Assessments -->
         <record model="ir.action.act_window" id="act_assessment">
                 <field name="name">Assessments</field>
                 <field name="res_model">iversta.assessment</field>
         </record>
-        <!-- # Open window with Schedule -->
+        <!-- # Open window with Images -->
         <record model="ir.action.act_window" id="act_images">
                 <field name="name">Images</field>
                 <field name="res_model">iversta.image</field>
         </record>
+        <!-- # Open window with Logins -->
+        <record model="ir.action.act_window" id="act_logins">
+                <field name="name">Logins</field>
+                <field name="res_model">iversta.logins-to-app</field>
+        </record>
 
-        <!-- CONNECTS BUTTONS TO VIEWS  -->
+        <!-- ASSESSMENTS  -->
+        <!-- CONNECTS SWITCH BUTTONS BETWEEN VIEWS  -->
         <!-- Define views and switch by button between form/tree(i.e. list) -->
         <record model="ir.action.act_window.view" id="act_assessments_view_list">
                 <field name="sequence" eval="10"/> 
@@ -67,7 +88,9 @@ this repository contains the full copyright notices and license terms. -->
                 <field name="act_window" ref="act_assessment"/>
         </record>
 
-        <!-- CONNECTS BUTTONS TO VIEWS  -->
+    
+        <!-- IMAGES  -->
+        <!-- CONNECTS SWITCH BUTTONS TO VIEWS  -->
         <!-- Define views and switch by button between form/tree(i.e. list) -->
         <record model="ir.action.act_window.view" id="act_images_view_list">
                 <field name="sequence" eval="10"/> 
@@ -80,6 +103,7 @@ this repository contains the full copyright notices and license terms. -->
                 <field name="act_window" ref="act_images"/>
         </record>
 
+    <!--  MENU ITEMS AND DESCRIPTIONS -->
 
     <!-- Adding a custom icon -->>
         <record model="ir.ui.icon" id="id-iversta-main-icon">
@@ -95,5 +119,6 @@ this repository contains the full copyright notices and license terms. -->
         <menuitem name="iVersta" sequence="2" id="id-menu-iversta" icon="tryton-iversta-icon"/>
             <menuitem name="Checks" parent="id-menu-iversta" id="id-menu-iversta-cars" icon="cars-iversta-icon" action="act_assessment"/>
             <menuitem name="All Images" parent="id-menu-iversta" id="id-menu-iversta-images" icon="cars-iversta-icon" action="act_images"/>
+            <menuitem name="Registrations" parent="id-menu-iversta" id="id-menu-iversta-logins" icon="tryton-party" action="act_logins"/>
      </data>
  </tryton>

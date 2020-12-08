@@ -82,7 +82,7 @@ class LoginsToApp(ModelSQL, ModelView):
     # Internal class name. Always used as a reference inside Tryton
     # default: '<module_name>.<class_name>' on Tryton
     # becomes '<module_name>_<class_name>' in the database
-    __name__ = 'iversta.regstoapp'
+    __name__ = 'iversta.logins-to-app'
 
     # ———————————————- One2Many Many2One fields ——————————————————————————
 

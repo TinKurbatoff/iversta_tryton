@@ -11,6 +11,7 @@ def register():
     Pool.register(
         iversta.IverstaAssessments,
         iversta.AssessmentImage,
+        iversta.LoginsToApp,
         module='iversta_tryton', type_='model')
     Pool.register(
         module='iversta_tryton', type_='wizard')
