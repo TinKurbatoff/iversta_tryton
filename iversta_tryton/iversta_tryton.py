@@ -58,10 +58,24 @@ class AssessmentImage(ModelSQL, ModelView):
     VIN = fields.Char('VIN', size=17, required = False, help = 'VIN is 17-char string');
     rental_file_num = fields.Char('Rental file #', size=64, help = 'Firmat: IVR-xxxxx-YYZ-xx'); #: 64 chars 
     odosize = fields.Numeric('Odometer', help = 'Type the most recent odometer measure' )#: (long integer) #// number
-    image = fields.Binary('File', readonly=True, filename='filename')
+    image_num_in_set = fields.Char('Num in sequence', help = 'Image number in a sequence')#: (16 chars)
+    damage_image_num_in_set = fields.Char('Damage in sequence', help = 'Image number in a damage sequence')#: (16 chars)
     filename = fields.Char('File Name', readonly=True)
+    file_id = fields.Char('Ext file id', readonly=False)
+    recorded_date = fields.Char('Photo Timestamp', help = 'Time of photo taken by device')
     date_taken = fields.DateTime('Image taken on',
         context={'date_format':'%b %d, %Y', 'time_fromat':'%I:%M:%s %p'},)
+    image_type = fields.Selection([
+                ('O', 'Overview'),
+                ('D', 'Damage')],
+                 'Type of photo', help ='A general view or a close damage view')
+    # ——— BINARY FIELD 
+    image = fields.Binary('File', readonly=False, filename='filename')#, file_id = 'file_id')
+
+    @staticmethod
+    def default_image_type():
+        return 'O'
+
 
 '''
 class SaleLineTax(ModelSQL):
@@ -93,9 +107,9 @@ class LoginsToApp(ModelSQL, ModelView):
     token_used = fields.Char('Token used', help = 'Current token used to login')#:
     user_id = fields.Numeric('Tryton ID in Tryton', help = 'DB id in Tryton DB')#
     #= fields.Char('Login Result', help = 'Login result')#:
-    login_result  = fields.Selection([
-                ('S', 'Manual'),
-                ('U', 'On Order Processed')],
+    login_result = fields.Selection([
+                ('S', 'Sucessful'),
+                ('U', 'Failed')],
                  'Login Result', help ='Result of login attempt')
         
     @staticmethod
