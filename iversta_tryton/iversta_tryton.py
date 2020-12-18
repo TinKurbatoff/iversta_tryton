@@ -7,7 +7,9 @@ import os.path
 
 
 __all__ = [ 'IverstaAssessments',
+            'AssessmentChain'
             'AssessmentImage',
+            'LoginsToApp'
             ] 
 
 module_path = os.path.dirname(__file__)
@@ -25,22 +27,42 @@ class IverstaAssessments(ModelSQL, ModelView):
 
 
     # ———————————————- One2Many Many2One fields ——————————————————————————
-    images = fields.One2Many('iversta.image', 'assessment', 'All images')
+    images = fields.One2Many('iversta.image', 'assessment', string = 'All images', help = "All assessment images taken in this session")
+    images_previous = fields.One2Many('iversta.image', 'next_to_compare', string = 'Previous set', help = "All assessment images taken in the previous session")
+    # previous_set = fields.One2One('iversta.assessment-iversta.assessment', origin = 'next_set', target = 'next_set_chain', string = 'Previous session', help = "Link to the previous session")
+    # next_set = fields.One2One('iversta.assessment-iversta.assessment', origin = 'previous_set', target = 'previous_set_chain', string = 'Next session', help = "Link to the previous session")
     # ———————————————————— Function fields —————————————————————————
 
     # ———————————————————— Plain fields ————————————————————————————
+    last_photo_date = fields.Char('Last image timestamp', readonly = True, help = 'Time of the last photo taken')
     assess_datetime = fields.DateTime("Assessed on",
         context={'date_format':'%b %d, %Y', 'time_fromat':'%I:%M:%s %p'},
         #format='%I:%M %p',
         required=False,
-        )
-    license_plate = fields.Char('License plate', help = '1-8 chars, car license plate like XXX-XXX')#: (16 chars)
-    VIN = fields.Char('VIN', size=17, required = False, help = 'VIN is 17-char string');
-    rental_file_num = fields.Char('Rental file #', size=64, help = 'Format: IVR-xxxxx-YYZ-xx'); #: 64 chars 
+        readonly = True,)
+    license_plate = fields.Char('License plate',  readonly = True, help = '1-8 chars, car license plate like XXX-XXX')#: (16 chars)
+    VIN = fields.Char('VIN', size=17, required = False,  readonly = True, help = 'VIN is 17-char string');
+    rental_file_num = fields.Char('Rental file #', size=64,  readonly = True, help = 'Format: IVR-xxxxx-YYZ-xx'); #: 64 chars 
     odosize = fields.Numeric('Odometer', help = 'Type the most recent odometer measure' )#: (long integer) #// number
-    images_qty = fields.Integer('Images')#: (integer) // if needed?
-    damages_qty = fields.Integer('Damages')#: (integer) // if needed?
+    images_qty = fields.Integer('Images',  readonly = True,)#: (integer) // if needed?
+    damages_qty = fields.Integer('Damages', readonly = True,)#: (integer) // if needed?
+    session_uuid = fields.Char('Uniquie session ID', size=40, readonly = True, help = 'UUID example: b6d6d0be-1a67-4adc-b5a2-e6a6d1a8310d'); #: 64 chars 
+    comments = fields.Text('Comments',  help = 'Any comments to a session'); #: 64 chars 
     
+class AssessmentChain(ModelSQL, ModelView):
+    # description (mandatory on first declaration)
+    'Chaining Assessments'
+
+    # Internal class name. Always used as a reference inside Tryton
+    # default: '<module_name>.<class_name>' on Tryton
+    # becomes '<module_name>_<class_name>' in the database
+    __name__ = 'iversta.assessment-iversta.assessment'
+    previous_set_chain = fields.One2One('iversta.assessment-iversta.assessment', origin = 'next_set_chain', target = 'next_set', string = 'Previous session', help = "Link to the previous session")
+    next_set_chain = fields.One2One('iversta.assessment-iversta.assessment', origin = 'previous_set_chain', target = 'previous_set', string = 'Previous session', help = "Link to the previous session")
+#    previous_set_chain = fields.Many2One('iversta.assessment', 'Previous Set', ondelete='SET NULL', select=True, required=True)
+#    next_set_chain = fields.Many2One('iversta.assessment', 'Next Set', ondelete='SET NULL', select=True, required=True)
+
+
 class AssessmentImage(ModelSQL, ModelView):
      #docstring for AssessmentImage
     'Image of Assessment'
@@ -51,30 +73,42 @@ class AssessmentImage(ModelSQL, ModelView):
     __name__ = 'iversta.image'
 
     # ———————————————- One2Many Many2One fields ——————————————————————————
-    assessment = fields.Many2One('iversta.assessment','Assessment set', ondelete='RESTRICT', select=True)
+    assessment = fields.Many2One('iversta.assessment', string = 'Most recent set', ondelete='RESTRICT', required=False,  help = 'The full set of assesment images')
+    next_to_compare = fields.Many2One('iversta.assessment', string = 'Next set to comare to', ondelete='RESTRICT', required=False,  help = 'The full set of assesment images')
 
     # ———————————————————— Plain fields ————————————————————————————
-    license_plate = fields.Char('License plate', help = '1-8 chars, car license plate like XXX-XXX')#: (16 chars)
-    VIN = fields.Char('VIN', size=17, required = False, help = 'VIN is 17-char string');
-    rental_file_num = fields.Char('Rental file #', size=64, help = 'Firmat: IVR-xxxxx-YYZ-xx'); #: 64 chars 
+    license_plate = fields.Char('License plate', readonly = True, help = '1-8 chars, car license plate like XXX-XXX')#: (16 chars)
+    VIN = fields.Char('VIN', size=17, required = False, readonly = True, help = 'VIN is 17-char string');
+    rental_file_num = fields.Char('Rental file #', readonly = True, size=64, help = 'Firmat: IVR-xxxxx-YYZ-xx'); #: 64 chars 
     odosize = fields.Numeric('Odometer', help = 'Type the most recent odometer measure' )#: (long integer) #// number
     image_num_in_set = fields.Char('Num in sequence', help = 'Image number in a sequence')#: (16 chars)
     damage_image_num_in_set = fields.Char('Damage in sequence', help = 'Image number in a damage sequence')#: (16 chars)
     filename = fields.Char('File Name', readonly=True)
     file_id = fields.Char('Ext file id', readonly=False)
-    recorded_date = fields.Char('Photo Timestamp', help = 'Time of photo taken by device')
-    date_taken = fields.DateTime('Image taken on',
+    session_uuid = fields.Char('Uniquie session ID', size=40, readonly = True, help = 'UUID example: b6d6d0be-1a67-4adc-b5a2-e6a6d1a8310d'); #: 64 chars 
+    recorded_date = fields.Char('Photo Timestamp', readonly = True, help = 'Time of photo taken by device')
+    date_taken = fields.DateTime('Image taken on', readonly = True,
         context={'date_format':'%b %d, %Y', 'time_fromat':'%I:%M:%s %p'},)
     image_type = fields.Selection([
                 ('O', 'Overview'),
                 ('D', 'Damage')],
-                 'Type of photo', help ='A general view or a close damage view')
+                 'Type of photo', readonly = True, help ='A general view or a close damage view')
+    check_in_out = fields.Selection([
+                ('I', 'Car Check In'),
+                ('O', 'Car Check Out')],
+                 'Session type (CheckIn|CheckOut)', readonly = True, help ='When photo is taken CheckIn|CheckOut')
+    comments = fields.Text('Comments',  help = 'Any comments to the image'); #: 64 chars 
+
     # ——— BINARY FIELD 
     image = fields.Binary('File', readonly=False, filename='filename')#, file_id = 'file_id')
 
     @staticmethod
     def default_image_type():
         return 'O'
+
+    @staticmethod
+    def default_check_in_out():
+        return 'I'
 
 
 '''

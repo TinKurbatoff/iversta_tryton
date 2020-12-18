@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!-- This file is part of Tryton.  The COPYRIGHT file at the top level of
+this repository contains the full copyright notices and license terms. -->
+<tree>
+	<field name="date_taken" widget="date"/>
+	<field name="recorded_date"/>
+	<field name="license_plate"/>
+    <field name="VIN"/> 
+    <field name="rental_file_num"/>
+    <field name="odosize"/>
+    <field name="image_num_in_set"/>
+    <field name="damage_image_num_in_set"/> 
+    <field name="filename"/> 
+</tree>

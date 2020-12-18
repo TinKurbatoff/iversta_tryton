@@ -10,6 +10,7 @@ __all__ = ['register']
 def register():
     Pool.register(
         iversta.IverstaAssessments,
+        iversta.AssessmentChain,
         iversta.AssessmentImage,
         iversta.LoginsToApp,
         module='iversta_tryton', type_='model')

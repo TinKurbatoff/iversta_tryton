@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!-- This file is part of Tryton.  The COPYRIGHT file at the top level of
+this repository contains the full copyright notices and license terms. -->
+<form>
+    <group id="left" string="" colspan="4" xexpand="0" xfill="1" yfill="1">
+    <!--label name="assess_datetime"/-->
+    <!--field name="assess_datetime" widget="datetime"/-->
+    <label name="last_photo_date"/>
+    <field name="last_photo_date"/>
+    <label name="license_plate"/>
+    <field name="license_plate"/>
+    <label name="VIN"/>
+    <field name="VIN"/>
+    <label name="rental_file_num"/>
+    <field name="rental_file_num"/>
+    <label name="odosize"/> 
+    <field name="odosize"/> 
+    <label name="images_qty"/> 
+    <field name="images_qty"/> 
+    <label name="damages_qty"/>
+    <field name="damages_qty"/>
+    </group>
+     <notebook colspan="4" yexpand="1" xfill="1" yfill="1">
+      <page name="current-assessment" col="2" string="Current Assessment">
+        <separator id="thumbnail" string="All images" colspan="2"/>
+        <label name="images"/> 
+        <field name="images"/> 
+      </page>
+      <page name="previous-assessment" col="2" string="Previous Assessment">
+        <label name="images_previous"/> 
+        <field name="images_previous"/> 
+      </page>
+    </notebook> 
+</form>
+
