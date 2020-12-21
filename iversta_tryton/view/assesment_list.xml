@@ -1,10 +1,12 @@
 <?xml version="1.0"?>
 <!-- This file is part of Tryton.  The COPYRIGHT file at the top level of
 this repository contains the full copyright notices and license terms. -->
-<tree>
-    <field name="assess_datetime" widget="date"/>
+<tree default_order="assess_datetime desc">
+    <field name="assess_datetime" select="1" widget="date"/>
+    <field name="assess_datetime" width="50" select="2" widget="time"/>
     <field name="license_plate"/>
-    <field name="VIN"/>
+    <field name="check_in_out"/>
+    <!--field name="VIN"/-->
     <field name="rental_file_num"/>
     <field name="odosize"/> 
     <field name="images_qty"/> 

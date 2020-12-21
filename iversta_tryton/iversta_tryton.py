@@ -48,6 +48,19 @@ class IverstaAssessments(ModelSQL, ModelView):
     damages_qty = fields.Integer('Damages', readonly = True,)#: (integer) // if needed?
     session_uuid = fields.Char('Uniquie session ID', size=40, readonly = True, help = 'UUID example: b6d6d0be-1a67-4adc-b5a2-e6a6d1a8310d'); #: 64 chars 
     comments = fields.Text('Comments',  help = 'Any comments to a session'); #: 64 chars 
+    check_in_out = fields.Selection([
+                ('I', 'Car Check In'),
+                ('O', 'Car Check Out'),
+                ('U', 'Undefined'),],
+                'Session type (CheckIn|CheckOut)', readonly = True, help ='Inspection at CheckIn or CheckOut')
+
+    
+    @staticmethod
+    def default_check_in_out():
+        if len(images)>0:
+            return images[0].check_in_out
+        return 'U'
+
     
 class AssessmentChain(ModelSQL, ModelView):
     # description (mandatory on first declaration)
@@ -57,11 +70,12 @@ class AssessmentChain(ModelSQL, ModelView):
     # default: '<module_name>.<class_name>' on Tryton
     # becomes '<module_name>_<class_name>' in the database
     __name__ = 'iversta.assessment-iversta.assessment'
-    previous_set_chain = fields.One2One('iversta.assessment-iversta.assessment', origin = 'next_set_chain', target = 'next_set', string = 'Previous session', help = "Link to the previous session")
-    next_set_chain = fields.One2One('iversta.assessment-iversta.assessment', origin = 'previous_set_chain', target = 'previous_set', string = 'Previous session', help = "Link to the previous session")
-#    previous_set_chain = fields.Many2One('iversta.assessment', 'Previous Set', ondelete='SET NULL', select=True, required=True)
-#    next_set_chain = fields.Many2One('iversta.assessment', 'Next Set', ondelete='SET NULL', select=True, required=True)
+    # previous_set_chain = fields.One2One('iversta.assessment-iversta.assessment', origin = 'next_set_chain', target = 'next_set', string = 'Previous session', help = "Link to the previous session")
+    # next_set_chain = fields.One2One('iversta.assessment-iversta.assessment', origin = 'previous_set_chain', target = 'previous_set', string = 'Previous session', help = "Link to the previous session")
 
+###############################################################################################################
+###### ———————————————————-   IMAGES 
+###############################################################################################################
 
 class AssessmentImage(ModelSQL, ModelView):
      #docstring for AssessmentImage
@@ -73,8 +87,8 @@ class AssessmentImage(ModelSQL, ModelView):
     __name__ = 'iversta.image'
 
     # ———————————————- One2Many Many2One fields ——————————————————————————
-    assessment = fields.Many2One('iversta.assessment', string = 'Most recent set', ondelete='RESTRICT', required=False,  help = 'The full set of assesment images')
-    next_to_compare = fields.Many2One('iversta.assessment', string = 'Next set to comare to', ondelete='RESTRICT', required=False,  help = 'The full set of assesment images')
+    assessment = fields.Many2One('iversta.assessment', string = 'Most recent set', ondelete='SET NULL', required=False,  help = 'The full set of assesment images')
+    next_to_compare = fields.Many2One('iversta.assessment', string = 'Next set to comare to', ondelete='SET NULL', required=False,  help = 'The full set of assesment images')
 
     # ———————————————————— Plain fields ————————————————————————————
     license_plate = fields.Char('License plate', readonly = True, help = '1-8 chars, car license plate like XXX-XXX')#: (16 chars)

@@ -7,6 +7,8 @@ this repository contains the full copyright notices and license terms. -->
     <!--field name="assess_datetime" widget="datetime"/-->
     <label name="last_photo_date"/>
     <field name="last_photo_date"/>
+    <label name="check_in_out"/>
+    <field name="check_in_out"/>
     <label name="license_plate"/>
     <field name="license_plate"/>
     <label name="VIN"/>
