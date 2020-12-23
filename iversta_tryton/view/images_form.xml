@@ -27,20 +27,21 @@ this repository contains the full copyright notices and license terms. -->
     <field name="next_to_compare"/>
     </group>
     <notebook colspan="4" yexpand="1" xfill="1" yfill="1">
-      <page name="Small-preview" col="2" string="Small preview">
+      <page name="small-preview" col="2" string="Small preview">
         <separator id="thumbnail" string="Image thumbnail" colspan="2"/>
-	    <label name="image"/> 
-	    <field name="image" widget="image"/> 
-	    <label name="filename"/> 
+        <label name="filename"/> 
 	    <field name="filename"/>     
 	    <label name="recorded_date"/> 
 	    <field name="recorded_date"/>   
         <label name="session_uuid"/>
         <field name="session_uuid"/>
+        <field name="image" help="AFTER" widget="image"/> 
+        <field name="image_to_compare" help="BEFORE" widget="image"/>         
       </page>
-      <page name="Small-preview" col="2" string="Large view">
+      <page name="large-preview" col="2" string="Large view">
         <separator id="thumbnail" string="Image full" colspan="2"/>
-	    <field name="image" widget="image" width="1280" height="1024" yexpand="1"/> 
+	    <field name="image" help="AFTER" widget="image" width="1280" height="1024" yexpand="1"/> 
+        <field name="image_to_compare" help="BEFORE"  widget="image" width="1280" height="1024" yexpand="1"/> 
 	    <label name="filename"/> 
 	    <field name="filename"/>     
 	    <label name="recorded_date"/> 

@@ -1,7 +1,7 @@
 from trytond.model import ModelView
 from trytond.model import ModelSQL
 from trytond.model import (ModelStorage, fields)
-
+from trytond.pool import PoolMeta, Pool
 
 import os.path
 
@@ -114,7 +114,8 @@ class AssessmentImage(ModelSQL, ModelView):
     comments = fields.Text('Comments',  help = 'Any comments to the image'); #: 64 chars 
 
     # ——— BINARY FIELD 
-    image = fields.Binary('File', readonly=False, filename='filename')#, file_id = 'file_id')
+    image = fields.Binary('File', readonly=True, filename='filename')#, file_id = 'file_id')
+    image_to_compare = fields.Function(fields.Binary('File', readonly=True ), 'get_image_from_previous_set')#))
 
     @staticmethod
     def default_image_type():
@@ -124,6 +125,19 @@ class AssessmentImage(ModelSQL, ModelView):
     def default_check_in_out():
         return 'I'
 
+    def get_image_from_previous_set(self,name):
+        image_data =''
+        pool = Pool()
+        Inspection = pool.get('iversta.assessment')
+        Image=pool.get('iversta.image')
+        if self.assessment: # If this image belongs to inspection
+            if self.assessment.images_previous: # ...and that inspection has images from the previous inspection
+                for i in range(len(self.assessment.images_previous)): # iterate through all images in that previous inspection
+                    # and that previous inspection has image of the same overlay:
+                    if (self.image_num_in_set == self.assessment.images_previous[i].image_num_in_set):
+                            # >>> TO DO  <<<  # check if that is a damage view or overview?
+                            image_data = self.assessment.images_previous[i].image # take this image to show...
+        return image_data
 
 '''
 class SaleLineTax(ModelSQL):
