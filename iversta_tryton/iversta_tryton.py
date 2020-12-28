@@ -97,7 +97,7 @@ class AssessmentImage(ModelSQL, ModelView):
     odosize = fields.Numeric('Odometer', help = 'Type the most recent odometer measure' )#: (long integer) #// number
     image_num_in_set = fields.Char('Num in sequence', help = 'Image number in a sequence')#: (16 chars)
     damage_image_num_in_set = fields.Char('Damage in sequence', help = 'Image number in a damage sequence')#: (16 chars)
-    filename = fields.Char('File Name', readonly=True)
+
     file_id = fields.Char('Ext file id', readonly=False)
     session_uuid = fields.Char('Uniquie session ID', size=40, readonly = True, help = 'UUID example: b6d6d0be-1a67-4adc-b5a2-e6a6d1a8310d'); #: 64 chars 
     recorded_date = fields.Char('Photo Timestamp', readonly = True, help = 'Time of photo taken by device')
@@ -112,10 +112,17 @@ class AssessmentImage(ModelSQL, ModelView):
                 ('O', 'Car Check Out')],
                  'Session type (CheckIn|CheckOut)', readonly = True, help ='When photo is taken CheckIn|CheckOut')
     comments = fields.Text('Comments',  help = 'Any comments to the image'); #: 64 chars 
+    view_name = fields.Char('View name')
+
 
     # ——— BINARY FIELD 
-    image = fields.Binary('File', readonly=True, filename='filename')#, file_id = 'file_id')
-    image_to_compare = fields.Function(fields.Binary('File', readonly=True ), 'get_image_from_previous_set')#))
+    overlay_image  = fields.Binary('Overlay image', readonly=True, filename='overlay_filename') #, file_id = 'file_id')
+    overlay_filename = fields.Char('Overlay filename', help = 'Filename for overlay')
+
+    image = fields.Binary('Photo', readonly=True, filename='filename')#, file_id = 'file_id')
+    filename = fields.Char('File Name', readonly=True)
+    
+    image_to_compare = fields.Function(fields.Binary('Previous photo', readonly=True ), 'get_image_from_previous_set')#))
 
     @staticmethod
     def default_image_type():

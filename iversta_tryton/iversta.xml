@@ -104,6 +104,18 @@ this repository contains the full copyright notices and license terms. -->
         </record>
 
     <!--  MENU ITEMS AND DESCRIPTIONS -->
+        <record model="ir.action.report" id="report_inspection">
+            <field name="name">Inspection Report</field>
+            <field name="model">iversta.assessment</field>
+            <field name="report_name">iversta.assessment</field>
+            <field name="report">iversta_tryton/InspectionReportCard_report.fodt</field>
+        </record>
+        <record model="ir.action.keyword" id="report_inspection_keyword">
+            <field name="keyword">form_print</field>
+            <field name="model">iversta.assessment,-1</field>
+            <field name="action" ref="report_inspection"/>
+        </record>
+
 
     <!-- Adding a custom icon -->>
         <record model="ir.ui.icon" id="id-iversta-main-icon">
