@@ -2,12 +2,12 @@ from trytond.model import ModelView
 from trytond.model import ModelSQL
 from trytond.model import (ModelStorage, fields)
 from trytond.pool import PoolMeta, Pool
+from time import time
 
 import os.path
 
 
 __all__ = [ 'IverstaAssessments',
-            'AssessmentChain'
             'AssessmentImage',
             'LoginsToApp'
             ] 
@@ -18,7 +18,7 @@ module_path = os.path.dirname(__file__)
 ###########################  Class describes Vehicle ###############################
 class IverstaAssessments(ModelSQL, ModelView):
     # description (mandatory on first declaration)
-    'Assessments'
+    'Inspections'
 
     # Internal class name. Always used as a reference inside Tryton
     # default: '<module_name>.<class_name>' on Tryton
@@ -27,32 +27,32 @@ class IverstaAssessments(ModelSQL, ModelView):
 
 
     # ———————————————- One2Many Many2One fields ——————————————————————————
-    images = fields.One2Many('iversta.image', 'assessment', string = 'All images', help = "All assessment images taken in this session")
-    images_previous = fields.One2Many('iversta.image', 'next_to_compare', string = 'Previous set', help = "All assessment images taken in the previous session")
+    images = fields.One2Many('iversta.image', 'assessment', string = 'All images', help = "All inspections images taken in this session")
+    images_previous = fields.One2Many('iversta.image', 'next_to_compare', string = 'Previous set', help = "All inspection images taken in the previous session")
     # previous_set = fields.One2One('iversta.assessment-iversta.assessment', origin = 'next_set', target = 'next_set_chain', string = 'Previous session', help = "Link to the previous session")
     # next_set = fields.One2One('iversta.assessment-iversta.assessment', origin = 'previous_set', target = 'previous_set_chain', string = 'Next session', help = "Link to the previous session")
     # ———————————————————— Function fields —————————————————————————
 
     # ———————————————————— Plain fields ————————————————————————————
-    last_photo_date = fields.Char('Last image timestamp', readonly = True, help = 'Time of the last photo taken')
-    assess_datetime = fields.DateTime("Assessed on",
+    last_photo_date = fields.Char('Last image timestamp', readonly = False, help = 'Time of the last photo taken')
+    assess_datetime = fields.DateTime("Received on",
         context={'date_format':'%b %d, %Y', 'time_fromat':'%I:%M:%s %p'},
         #format='%I:%M %p',
         required=False,
-        readonly = True,)
-    license_plate = fields.Char('License plate',  readonly = True, help = '1-8 chars, car license plate like XXX-XXX')#: (16 chars)
-    VIN = fields.Char('VIN', size=17, required = False,  readonly = True, help = 'VIN is 17-char string');
-    rental_file_num = fields.Char('Rental file #', size=64,  readonly = True, help = 'Format: IVR-xxxxx-YYZ-xx'); #: 64 chars 
+        readonly = False,)
+    license_plate = fields.Char('License plate',  readonly = False, help = '1-8 chars, car license plate like XXX-XXX')#: (16 chars)
+    VIN = fields.Char('VIN', size=17, required = False,  readonly = False, help = 'VIN is 17-char string');
+    rental_file_num = fields.Char('Rental file #', size=64,  readonly = False, help = 'Format: IVR-xxxxx-YYZ-xx'); #: 64 chars 
     odosize = fields.Numeric('Odometer', help = 'Type the most recent odometer measure' )#: (long integer) #// number
-    images_qty = fields.Integer('Images',  readonly = True,)#: (integer) // if needed?
-    damages_qty = fields.Integer('Damages', readonly = True,)#: (integer) // if needed?
-    session_uuid = fields.Char('Uniquie session ID', size=40, readonly = True, help = 'UUID example: b6d6d0be-1a67-4adc-b5a2-e6a6d1a8310d'); #: 64 chars 
+    images_qty = fields.Integer('Images',  readonly = False,)#: (integer) // if needed?
+    damages_qty = fields.Integer('Damages', readonly = False,)#: (integer) // if needed?
+    session_uuid = fields.Char('Uniquie session ID', size=40, readonly = False, help = 'UUID example: b6d6d0be-1a67-4adc-b5a2-e6a6d1a8310d'); #: 64 chars 
     comments = fields.Text('Comments',  help = 'Any comments to a session'); #: 64 chars 
     check_in_out = fields.Selection([
                 ('I', 'Car Check In'),
                 ('O', 'Car Check Out'),
                 ('U', 'Undefined'),],
-                'Session type (CheckIn|CheckOut)', readonly = True, help ='Inspection at CheckIn or CheckOut')
+                'Session type (CheckIn|CheckOut)', readonly = False, help ='Inspection at CheckIn or CheckOut')
 
     
     @staticmethod
@@ -62,24 +62,13 @@ class IverstaAssessments(ModelSQL, ModelView):
         return 'U'
 
     
-class AssessmentChain(ModelSQL, ModelView):
-    # description (mandatory on first declaration)
-    'Chaining Assessments'
-
-    # Internal class name. Always used as a reference inside Tryton
-    # default: '<module_name>.<class_name>' on Tryton
-    # becomes '<module_name>_<class_name>' in the database
-    __name__ = 'iversta.assessment-iversta.assessment'
-    # previous_set_chain = fields.One2One('iversta.assessment-iversta.assessment', origin = 'next_set_chain', target = 'next_set', string = 'Previous session', help = "Link to the previous session")
-    # next_set_chain = fields.One2One('iversta.assessment-iversta.assessment', origin = 'previous_set_chain', target = 'previous_set', string = 'Previous session', help = "Link to the previous session")
-
 ###############################################################################################################
 ###### ———————————————————-   IMAGES 
 ###############################################################################################################
 
 class AssessmentImage(ModelSQL, ModelView):
      #docstring for AssessmentImage
-    'Image of Assessment'
+    'Image of Inspection'
 
     # Internal class name. Always used as a reference inside Tryton
     # default: '<module_name>.<class_name>' on Tryton
@@ -87,42 +76,46 @@ class AssessmentImage(ModelSQL, ModelView):
     __name__ = 'iversta.image'
 
     # ———————————————- One2Many Many2One fields ——————————————————————————
-    assessment = fields.Many2One('iversta.assessment', string = 'Most recent set', ondelete='SET NULL', required=False,  help = 'The full set of assesment images')
-    next_to_compare = fields.Many2One('iversta.assessment', string = 'Next set to comare to', ondelete='SET NULL', required=False,  help = 'The full set of assesment images')
+    assessment = fields.Many2One('iversta.assessment', string = 'Most recent set', ondelete='SET NULL', required=False,  help = 'The full set of inspection images')
+    next_to_compare = fields.Many2One('iversta.assessment', string = 'Next set to comare to', ondelete='SET NULL', required=False,  help = 'The full set of inspection images')
 
     # ———————————————————— Plain fields ————————————————————————————
-    license_plate = fields.Char('License plate', readonly = True, help = '1-8 chars, car license plate like XXX-XXX')#: (16 chars)
-    VIN = fields.Char('VIN', size=17, required = False, readonly = True, help = 'VIN is 17-char string');
-    rental_file_num = fields.Char('Rental file #', readonly = True, size=64, help = 'Firmat: IVR-xxxxx-YYZ-xx'); #: 64 chars 
+    license_plate = fields.Char('License plate', readonly = False, help = '1-8 chars, car license plate like XXX-XXX')#: (16 chars)
+    VIN = fields.Char('VIN', size=17, required = False, readonly = False, help = 'VIN is 17-char string');
+    rental_file_num = fields.Char('Rental file #', readonly = False, size=64, help = 'Firmat: IVR-xxxxx-YYZ-xx'); #: 64 chars 
     odosize = fields.Numeric('Odometer', help = 'Type the most recent odometer measure' )#: (long integer) #// number
-    image_num_in_set = fields.Char('Num in sequence', help = 'Image number in a sequence')#: (16 chars)
+    image_num_in_set = fields.Char('Position in sequence', help = 'Image number in a sequence')#: (16 chars)
     damage_image_num_in_set = fields.Char('Damage in sequence', help = 'Image number in a damage sequence')#: (16 chars)
 
     file_id = fields.Char('Ext file id', readonly=False)
-    session_uuid = fields.Char('Uniquie session ID', size=40, readonly = True, help = 'UUID example: b6d6d0be-1a67-4adc-b5a2-e6a6d1a8310d'); #: 64 chars 
-    recorded_date = fields.Char('Photo Timestamp', readonly = True, help = 'Time of photo taken by device')
-    date_taken = fields.DateTime('Image taken on', readonly = True,
+    session_uuid = fields.Char('Uniquie session ID', size=40, readonly = False, help = 'UUID example: b6d6d0be-1a67-4adc-b5a2-e6a6d1a8310d'); #: 64 chars 
+    recorded_date = fields.Char('Photo Timestamp', readonly = False, help = 'Time of photo taken by device')
+    date_taken = fields.DateTime('Image taken on', readonly = False,
         context={'date_format':'%b %d, %Y', 'time_fromat':'%I:%M:%s %p'},)
     image_type = fields.Selection([
                 ('O', 'Overview'),
                 ('D', 'Damage')],
-                 'Type of photo', readonly = True, help ='A general view or a close damage view')
+                 'Type of photo', readonly = False, help ='A general view or a close damage view')
     check_in_out = fields.Selection([
                 ('I', 'Car Check In'),
                 ('O', 'Car Check Out')],
-                 'Session type (CheckIn|CheckOut)', readonly = True, help ='When photo is taken CheckIn|CheckOut')
+                 'Session type (CheckIn|CheckOut)', readonly = False, help ='When photo is taken CheckIn|CheckOut')
     comments = fields.Text('Comments',  help = 'Any comments to the image'); #: 64 chars 
     view_name = fields.Char('View name')
-
+    view_name_func = fields.Function(fields.Char('View name (generated)'),'get_view_name')
 
     # ——— BINARY FIELD 
-    overlay_image  = fields.Binary('Overlay image', readonly=True, filename='overlay_filename') #, file_id = 'file_id')
+    overlay_image  = fields.Binary('Overlay image', readonly=False, filename='overlay_filename') #, file_id = 'file_id')
     overlay_filename = fields.Char('Overlay filename', help = 'Filename for overlay')
 
-    image = fields.Binary('Photo', readonly=True, filename='filename')#, file_id = 'file_id')
-    filename = fields.Char('File Name', readonly=True)
-    
-    image_to_compare = fields.Function(fields.Binary('Previous photo', readonly=True ), 'get_image_from_previous_set')#))
+    image = fields.Binary('Photo', readonly=False, filename='filename')#, file_id = 'file_id')
+    image_func = fields.Function(fields.Binary('Photo with overlay', readonly=False ), 'get_image_with_overlay_text')#))
+    filename = fields.Char('File Name', readonly=False)
+    svg_image = fields.Binary('SVG overlay', readonly=False, filename='svg_filename')#, file_id = 'file_id')
+    svg_filename = fields.Char('File Name', readonly=False)
+
+    image_to_compare = fields.Function(fields.Binary('Previous photo', readonly=False ), 'get_image_from_previous_set')#))
+    # image_to_compare_func = fields.Function(fields.Binary('Previous photo', readonly=False ), 'get_image_from_previous_set')#))
 
     @staticmethod
     def default_image_type():
@@ -131,6 +124,53 @@ class AssessmentImage(ModelSQL, ModelView):
     @staticmethod
     def default_check_in_out():
         return 'I'
+
+    def get_view_name(self, name):
+        View_names = ['Front view', 'Front-Driver side', 'Rear-Driver side',  'Rear view', 'Rear-Passenger side', 'Front-Passenger side', 'Odometer'];
+        try:
+            _view_name = View_names[int(self.image_num_in_set)]
+        except Exception as e:
+            _view_name = f'{e}'
+        return _view_name
+
+    def place_text_over_image(self,image_data,text, shift_y=0):
+        from PIL import Image
+        from PIL import ImageFont
+        from PIL import ImageDraw 
+        from io import BytesIO
+
+        
+        x, y = 10, 10+shift_y
+        fontcolor = (255, 184, 0)
+        shadowcolor = "black"
+        # text = "AFTER"
+        # img = Image.open("sample_in.jpg")
+        # img = Image.frombytes(mode='RGBA',size=(1024,768),data=self.image, decoder_name='raw')
+        try:
+            img = Image.open(BytesIO(image_data))
+            # img.thumbnail((1024,768), Image.ANTIALIAS)
+            draw = ImageDraw.Draw(img)
+        # font = ImageFont.truetype(<font-file>, <font-size>)
+        # font = ImageFont.truetype("sans-serif.ttf", 16)
+        # draw.text((x, y),"Sample Text",(r,g,b))
+            font_path="/usr/local/lib/python3.7/dist-packages/werkzeug/debug/shared/ubuntu.ttf"
+            font = ImageFont.truetype(font_path, 122)
+            font_shadow = ImageFont.truetype(font_path, 122)
+            draw.text((x-2, y-2), text, font=font_shadow, fill=shadowcolor)
+            draw.text((x+2, y-2), text, font=font_shadow, fill=shadowcolor)
+            draw.text((x-2, y+2), text, font=font_shadow, fill=shadowcolor)
+            draw.text((x-2, y-2), text, font=font_shadow, fill=shadowcolor)
+            draw.text((x, y),text, fontcolor, font=font)
+        # roi_img.save(img_byte_arr, format='PNG')
+            buf = BytesIO()
+            img.save(buf, format='JPEG', compress_level=1)
+            return buf.getvalue()
+        except Exception as e:
+            # raise(e)
+            pass
+        return image_data
+
+
 
     def get_image_from_previous_set(self,name):
         image_data =''
@@ -142,9 +182,19 @@ class AssessmentImage(ModelSQL, ModelView):
                 for i in range(len(self.assessment.images_previous)): # iterate through all images in that previous inspection
                     # and that previous inspection has image of the same overlay:
                     if (self.image_num_in_set == self.assessment.images_previous[i].image_num_in_set):
+                        if (self.assessment.images_previous[i].filename[-3:]!='svg'):
                             # >>> TO DO  <<<  # check if that is a damage view or overview?
                             image_data = self.assessment.images_previous[i].image # take this image to show...
-        return image_data
+                        else:
+                            image_data = self.assessment.images_previous[i-1].image
+        return self.place_text_over_image(image_data,'BEFORE')
+
+    def get_image_with_overlay_text(self,name):
+        # start_time = time() # calculate execution time
+        img_data = self.place_text_over_image(self.image,'AFTER',0)
+        # time_txt =  f"--- {round(time() - start_time,4)} seconds ---" 
+        # img_data = self.place_text_over_image(img_data, time_txt, 120)
+        return img_data
 
 '''
 class SaleLineTax(ModelSQL):

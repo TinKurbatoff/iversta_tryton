@@ -6,7 +6,7 @@ this repository contains the full copyright notices and license terms. -->
     <field name="check_in_out"/>    
     <field name="date_taken" widget="date"/>
     <field name="license_plate"/>
-    <field name="VIN"/> 
+    <field name="view_name_func"/> 
     <field name="rental_file_num"/>
     <field name="odosize"/>
     <field name="image_num_in_set"/>

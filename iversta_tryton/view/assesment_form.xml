@@ -23,12 +23,12 @@ this repository contains the full copyright notices and license terms. -->
     <field name="damages_qty"/>
     </group>
      <notebook colspan="4" yexpand="1" xfill="1" yfill="1">
-      <page name="current-assessment" col="2" string="Current Assessment">
+      <page name="current-assessment" col="2" string="Current Inspection">
         <separator id="thumbnail" string="All images" colspan="2"/>
         <label name="images"/> 
         <field name="images"/> 
       </page>
-      <page name="previous-assessment" col="2" string="Previous Assessment">
+      <page name="previous-assessment" col="2" string="Previous Inspection">
         <label name="images_previous"/> 
         <field name="images_previous"/> 
       </page>

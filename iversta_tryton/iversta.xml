@@ -59,8 +59,8 @@ this repository contains the full copyright notices and license terms. -->
 
         <!-- Open windows -->    
         <!-- # Open window with Assessments -->
-        <record model="ir.action.act_window" id="act_assessment">
-                <field name="name">Assessments</field>
+        <record model="ir.action.act_window" id="act_inspection">
+                <field name="name">Inspections</field>
                 <field name="res_model">iversta.assessment</field>
         </record>
         <!-- # Open window with Images -->
@@ -80,12 +80,12 @@ this repository contains the full copyright notices and license terms. -->
         <record model="ir.action.act_window.view" id="act_assessments_view_list">
                 <field name="sequence" eval="10"/> 
                 <field name="view" ref="assessment_view_list"/>
-                <field name="act_window" ref="act_assessment"/>
+                <field name="act_window" ref="act_inspection"/>
         </record>
         <record model="ir.action.act_window.view" id="act_assessments_view_form">
                 <field name="sequence" eval="20"/>
                 <field name="view" ref="assessment_view_form"/>
-                <field name="act_window" ref="act_assessment"/>
+                <field name="act_window" ref="act_inspection"/>
         </record>
 
     
@@ -104,7 +104,7 @@ this repository contains the full copyright notices and license terms. -->
         </record>
 
     <!--  MENU ITEMS AND DESCRIPTIONS -->
-        <record model="ir.action.report" id="report_inspection">
+        <record model="ir.action.report" id="report_inspection_odt">
             <field name="name">Inspection Report</field>
             <field name="model">iversta.assessment</field>
             <field name="report_name">iversta.assessment</field>
@@ -113,7 +113,7 @@ this repository contains the full copyright notices and license terms. -->
         <record model="ir.action.keyword" id="report_inspection_keyword">
             <field name="keyword">form_print</field>
             <field name="model">iversta.assessment,-1</field>
-            <field name="action" ref="report_inspection"/>
+            <field name="action" ref="report_inspection_odt"/>
         </record>
 
 
@@ -129,7 +129,7 @@ this repository contains the full copyright notices and license terms. -->
 
     <!-- Menus and submenus -->
         <menuitem name="iVersta" sequence="2" id="id-menu-iversta" icon="tryton-iversta-icon"/>
-            <menuitem name="Checks" parent="id-menu-iversta" id="id-menu-iversta-cars" icon="cars-iversta-icon" action="act_assessment"/>
+            <menuitem name="Inspections" parent="id-menu-iversta" id="id-menu-iversta-cars" icon="cars-iversta-icon" action="act_inspection"/>
             <menuitem name="All Images" parent="id-menu-iversta" id="id-menu-iversta-images" icon="cars-iversta-icon" action="act_images"/>
             <menuitem name="Registrations" parent="id-menu-iversta" id="id-menu-iversta-logins" icon="tryton-party" action="act_logins"/>
      </data>
