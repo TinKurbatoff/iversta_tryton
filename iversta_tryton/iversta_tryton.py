@@ -134,6 +134,7 @@ class AssessmentImage(ModelSQL, ModelView):
         return _view_name
 
     def place_text_over_image(self,image_data,text, shift_y=0):
+        # shift_y — vertical alignment for multi-row text
         from PIL import Image
         from PIL import ImageFont
         from PIL import ImageDraw 
@@ -173,6 +174,8 @@ class AssessmentImage(ModelSQL, ModelView):
 
 
     def get_image_from_previous_set(self,name):
+        text_on_image_list = {'I':'CHECK-IN', 'O':'CHECK-OUT'}
+        text_on_image =text_on_image_list['O']
         image_data =''
         pool = Pool()
         Inspection = pool.get('iversta.assessment')
@@ -185,16 +188,19 @@ class AssessmentImage(ModelSQL, ModelView):
                         if (self.assessment.images_previous[i].filename[-3:]!='svg'):
                             # >>> TO DO  <<<  # check if that is a damage view or overview?
                             image_data = self.assessment.images_previous[i].image # take this image to show...
+                            text_on_image = text_on_image_list[self.assessment.images_previous[i].check_in_out] # select the text depends on moment of inspection
                         else:
-                            image_data = self.assessment.images_previous[i-1].image
-        return self.place_text_over_image(image_data,'BEFORE')
+                            image_data = self.assessment.images_previous[i-1].image # if it is svg — the previous is an actual image.
+                            text_on_image = text_on_image_list[self.assessment.images_previous[i-1].check_in_out] # select the text depends on moment of inspection
+        return self.place_text_over_image(image_data, text_on_image, shift_y=0) # return image with selected text
 
     def get_image_with_overlay_text(self,name):
+        text_on_image_list = {'I':'CHECK-IN', 'O':'CHECK-OUT'}
         # start_time = time() # calculate execution time
-        img_data = self.place_text_over_image(self.image,'AFTER',0)
+        text_on_image = text_on_image_list[self.check_in_out]
         # time_txt =  f"--- {round(time() - start_time,4)} seconds ---" 
         # img_data = self.place_text_over_image(img_data, time_txt, 120)
-        return img_data
+        return self.place_text_over_image(self.image, text_on_image, shift_y=0)
 
 '''
 class SaleLineTax(ModelSQL):

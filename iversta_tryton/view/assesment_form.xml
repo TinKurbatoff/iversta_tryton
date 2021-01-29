@@ -26,7 +26,7 @@ this repository contains the full copyright notices and license terms. -->
       <page name="current-assessment" col="2" string="Current Inspection">
         <separator id="thumbnail" string="All images" colspan="2"/>
         <label name="images"/> 
-        <field name="images"/> 
+        <field name="images" mode="form,tree"/> 
       </page>
       <page name="previous-assessment" col="2" string="Previous Inspection">
         <label name="images_previous"/> 
