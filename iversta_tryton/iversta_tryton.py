@@ -25,7 +25,6 @@ class IverstaAssessments(ModelSQL, ModelView):
     # becomes '<module_name>_<class_name>' in the database
     __name__ = 'iversta.assessment'
 
-
     # ———————————————- One2Many Many2One fields ——————————————————————————
     images = fields.One2Many('iversta.image', 'assessment', string = 'All images', help = "All inspections images taken in this session")
     images_previous = fields.One2Many('iversta.image', 'next_to_compare', string = 'Previous set', help = "All inspection images taken in the previous session")
@@ -54,7 +53,6 @@ class IverstaAssessments(ModelSQL, ModelView):
                 ('U', 'Undefined'),],
                 'Session type (CheckIn|CheckOut)', readonly = False, help ='Inspection at CheckIn or CheckOut')
 
-    
     @staticmethod
     def default_check_in_out():
         if len(images)>0:

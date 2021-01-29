@@ -59,8 +59,11 @@ this repository contains the full copyright notices and license terms. -->
 
         <!-- Open windows -->    
         <!-- # Open window with Assessments -->
-        <record model="ir.action.act_window" id="act_inspection">
+        <record model="ir.action.act_window" id="act_inspections">
                 <field name="name">Inspections</field>
+                <field name="order"
+                eval="[('id', 'DESC'), ('assess_datetime', 'DESC')]"
+                pyson="1"/>                
                 <field name="res_model">iversta.assessment</field>
         </record>
         <!-- # Open window with Images -->
@@ -80,12 +83,12 @@ this repository contains the full copyright notices and license terms. -->
         <record model="ir.action.act_window.view" id="act_assessments_view_list">
                 <field name="sequence" eval="10"/> 
                 <field name="view" ref="assessment_view_list"/>
-                <field name="act_window" ref="act_inspection"/>
+                <field name="act_window" ref="act_inspections"/>
         </record>
         <record model="ir.action.act_window.view" id="act_assessments_view_form">
                 <field name="sequence" eval="20"/>
                 <field name="view" ref="assessment_view_form"/>
-                <field name="act_window" ref="act_inspection"/>
+                <field name="act_window" ref="act_inspections"/>
         </record>
 
     
@@ -129,7 +132,7 @@ this repository contains the full copyright notices and license terms. -->
 
     <!-- Menus and submenus -->
         <menuitem name="iVersta" sequence="2" id="id-menu-iversta" icon="tryton-iversta-icon"/>
-            <menuitem name="Inspections" parent="id-menu-iversta" id="id-menu-iversta-cars" icon="cars-iversta-icon" action="act_inspection"/>
+            <menuitem name="Inspections" parent="id-menu-iversta" id="id-menu-iversta-cars" icon="cars-iversta-icon" action="act_inspections"/>
             <menuitem name="All Images" parent="id-menu-iversta" id="id-menu-iversta-images" icon="cars-iversta-icon" action="act_images"/>
             <menuitem name="Registrations" parent="id-menu-iversta" id="id-menu-iversta-logins" icon="tryton-party" action="act_logins"/>
      </data>

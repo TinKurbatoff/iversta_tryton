@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- This file is part of Tryton.  The COPYRIGHT file at the top level of
 this repository contains the full copyright notices and license terms. -->
-<tree string="Inspections" default_sequence="images_qty" tree_state="1">
+<tree string="Inspections" tree_state="1">
     <field name="assess_datetime" select="1" widget="date"/>
     <field name="assess_datetime" width="50" select="2" widget="time"/>
     <field name="license_plate"/>
@@ -11,5 +11,5 @@ this repository contains the full copyright notices and license terms. -->
     <field name="odosize"/> 
     <field name="images_qty"/> 
     <field name="damages_qty"/>
-    <field name="id" tree_invisible="1"/>
+    <!-- <field name="sequence" tree_invisible="1"/> -->
 </tree>
