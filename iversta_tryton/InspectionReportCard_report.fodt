@@ -610,7 +610,7 @@
    <style:graphic-properties fo:margin-left="0in" fo:margin-right="0in" fo:margin-top="0in" fo:margin-bottom="0in" style:run-through="foreground" style:protect="size" style:wrap="none" style:vertical-pos="from-top" style:vertical-rel="paragraph" style:horizontal-pos="from-left" style:horizontal-rel="paragraph" fo:padding="0in" fo:border="none" draw:wrap-influence-on-position="once-concurrent" loext:allow-overlap="true"/>
   </style:style>
   <style:style style:name="fr3" style:family="graphic" style:parent-style-name="Frame">
-   <style:graphic-properties fo:margin-left="0in" fo:margin-right="0in" fo:margin-top="0in" fo:margin-bottom="0in" style:run-through="foreground" style:protect="size" style:wrap="none" style:vertical-pos="from-top" style:vertical-rel="paragraph-content" style:horizontal-pos="from-left" style:horizontal-rel="paragraph" fo:padding="0.0591in" fo:border="0.06pt solid #dddddd" draw:wrap-influence-on-position="once-concurrent" loext:allow-overlap="true"/>
+   <style:graphic-properties fo:margin-left="0in" fo:margin-right="0in" fo:margin-top="0in" fo:margin-bottom="0in" style:run-through="foreground" style:wrap="none" style:vertical-pos="from-top" style:vertical-rel="paragraph-content" style:horizontal-pos="from-left" style:horizontal-rel="paragraph" fo:padding="0.0591in" fo:border="0.06pt solid #dddddd" draw:wrap-influence-on-position="once-concurrent" loext:allow-overlap="true"/>
   </style:style>
   <style:style style:name="fr4" style:family="graphic" style:parent-style-name="Graphics">
    <style:graphic-properties style:mirror="none" fo:clip="rect(0in, 0in, 0in, 0in)" draw:luminance="0%" draw:contrast="0%" draw:red="0%" draw:green="0%" draw:blue="0%" draw:gamma="100%" draw:color-inversion="false" draw:image-opacity="100%" draw:color-mode="standard"/>
@@ -866,7 +866,7 @@
     <table:table-column table:style-name="Table4.B"/>
     <table:table-row table:style-name="TableLine105554700617984">
      <table:table-cell table:style-name="Table4.A1" office:value-type="string">
-      <text:p text:style-name="P29"><draw:frame draw:style-name="fr3" draw:name="image: (image.image, &quot;image/png&quot;)" text:anchor-type="paragraph" svg:x="0in" svg:y="0in" svg:width="4.3in" svg:height="2.7in" draw:z-index="0">
+      <text:p text:style-name="P29"><draw:frame draw:style-name="fr3" draw:name="image: (image.image, &quot;image/png&quot;)" text:anchor-type="paragraph" svg:x="0in" svg:y="0in" svg:width="3.90in" svg:height="2.45in" draw:z-index="0">
         <draw:text-box>
          <text:p text:style-name="P45"/>
         </draw:text-box>

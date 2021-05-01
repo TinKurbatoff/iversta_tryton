@@ -32,6 +32,14 @@ this repository contains the full copyright notices and license terms. -->
         <label name="images_previous"/> 
         <field name="images_previous"/> 
       </page>
-    </notebook> 
+    </notebook>
+    <group id="left1" string="" colspan="4" xexpand="0" xfill="1" yfill="1">
+        <label name="app_ver"/> 
+        <field name="app_ver"/> 
+        <label name="device_id"/> 
+        <field name="device_id"/> 
+        <label name="image_user_id"/>
+        <field name="image_user_id"/>
+    </group> 
 </form>
 

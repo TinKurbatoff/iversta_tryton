@@ -23,6 +23,25 @@ this repository contains the full copyright notices and license terms. -->
             <field name="name">assesment_list</field>
         </record>
 
+        <!-- -->
+        <!-- ###################################### -->
+        <!-- #       Simple Inspection view       # -->
+        <!-- ###################################### -->
+        <record model="ir.ui.view" id="qinspection_view_form">
+            <field name="model">iversta.assessment</field>
+            <field name="type">form</field>
+            <field name="name">qinspection_form</field>
+        </record>
+        <!-- #################################### -->
+        <!-- #   Simple Inspection view(list)   # -->
+        <!-- #################################### -->
+        <record model="ir.ui.view" id="qinspection_view_list">
+            <field name="model">iversta.assessment</field>
+            <field name="type">tree</field>
+            <field name="name">qinspection_list</field>
+        </record> 
+
+
         <!-- ##################################### -->
         <!-- #  Images details form description  # -->
         <!-- ##################################### -->
@@ -58,11 +77,19 @@ this repository contains the full copyright notices and license terms. -->
         </record>
 
         <!-- Open windows -->    
-        <!-- # Open window with Assessments -->
+        <!-- # Open window with Inspections -->
         <record model="ir.action.act_window" id="act_inspections">
                 <field name="name">Inspections</field>
                 <field name="order"
                 eval="[('id', 'DESC'), ('assess_datetime', 'DESC')]"
+                pyson="1"/>                
+                <field name="res_model">iversta.assessment</field>
+        </record>
+        <!-- # Open window with quick view of Inspections -->
+        <record model="ir.action.act_window" id="act_qinspections">
+                <field name="name">Quick view Inspections</field>
+                <field name="order"
+                eval="[('id', 'DESC'),]"
                 pyson="1"/>                
                 <field name="res_model">iversta.assessment</field>
         </record>
@@ -91,6 +118,20 @@ this repository contains the full copyright notices and license terms. -->
                 <field name="act_window" ref="act_inspections"/>
         </record>
 
+        <!-- INSPECTION QUICK ASESSMENT  -->
+        <!-- CONNECTS SWITCH BUTTONS BETWEEN VIEWS  -->
+        <!-- Define views and switch by button between form/tree(i.e. list) -->
+        <record model="ir.action.act_window.view" id="act_q_inspections_view_list">
+                <field name="sequence" eval="10"/> 
+                <field name="view" ref="qinspection_view_list"/>
+                <field name="act_window" ref="act_qinspections"/>
+        </record>
+        <record model="ir.action.act_window.view" id="act_q_inspections_view_form">
+                <field name="sequence" eval="20"/>
+                <field name="view" ref="qinspection_view_form"/>
+                <field name="act_window" ref="act_qinspections"/>
+        </record>
+
     
         <!-- IMAGES  -->
         <!-- CONNECTS SWITCH BUTTONS TO VIEWS  -->
@@ -112,6 +153,7 @@ this repository contains the full copyright notices and license terms. -->
             <field name="model">iversta.assessment</field>
             <field name="report_name">iversta.assessment</field>
             <field name="report">iversta_tryton/InspectionReportCard_report.fodt</field>
+            <field name="extension">odt</field>
         </record>
         <record model="ir.action.keyword" id="report_inspection_keyword">
             <field name="keyword">form_print</field>
@@ -132,8 +174,9 @@ this repository contains the full copyright notices and license terms. -->
 
     <!-- Menus and submenus -->
         <menuitem name="iVersta" sequence="2" id="id-menu-iversta" icon="tryton-iversta-icon"/>
-            <menuitem name="Inspections" parent="id-menu-iversta" id="id-menu-iversta-cars" icon="cars-iversta-icon" action="act_inspections"/>
-            <menuitem name="All Images" parent="id-menu-iversta" id="id-menu-iversta-images" icon="cars-iversta-icon" action="act_images"/>
-            <menuitem name="Registrations" parent="id-menu-iversta" id="id-menu-iversta-logins" icon="tryton-party" action="act_logins"/>
+            <menuitem name="Quick view" sequence="10" parent="id-menu-iversta" id="id-menu-iversta-qview" icon="cars-iversta-icon" action="act_qinspections"/>
+            <menuitem name="Inspections" sequence="12" parent="id-menu-iversta" id="id-menu-iversta-cars" icon="cars-iversta-icon" action="act_inspections"/>
+            <menuitem name="All Images" sequence="15" parent="id-menu-iversta" id="id-menu-iversta-images" icon="cars-iversta-icon" action="act_images"/>
+            <menuitem name="Registrations" sequence="20" parent="id-menu-iversta" id="id-menu-iversta-logins" icon="tryton-party" action="act_logins"/>
      </data>
  </tryton>

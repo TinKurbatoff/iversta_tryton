@@ -5,8 +5,8 @@ this repository contains the full copyright notices and license terms. -->
     <group id="left" string="" colspan="4" xexpand="0" xfill="1" yfill="1">
     <label name="license_plate"/>
     <field name="license_plate"/>
-    <label name="VIN"/> 
-    <field name="VIN"/> 
+    <!-- <label name="VIN"/>  -->
+    <!-- <field name="VIN"/>  -->
     <label name="rental_file_num"/>
     <field name="rental_file_num"/>
     <label name="date_taken"/> 
@@ -32,10 +32,10 @@ this repository contains the full copyright notices and license terms. -->
     <!--field name="odosize"/--> 
     <label name="image_type"/> 
     <field name="image_type"/>     
-    <label name="damage_image_num_in_set"/> 
-    <field name="damage_image_num_in_set"/>
-    <label name="image_num_in_set"/> 
-    <field name="image_num_in_set"/>
+    <!-- <label name="damage_image_num_in_set"/>  -->
+    <!-- <field name="damage_image_num_in_set"/> -->
+    <!-- <label name="image_num_in_set"/>  -->
+    <!-- <field name="image_num_in_set"/> -->
     <label name="check_in_out"/> 
     <field name="check_in_out"/>
     <label name="assessment"/> 
@@ -43,9 +43,9 @@ this repository contains the full copyright notices and license terms. -->
     <label name="next_to_compare"/> 
     <field name="next_to_compare"/>
     </group>
-    <field name="overlay_image"/>
-    <label name="view_name_func"/>
-    <field name="view_name_func"/>
+    <!-- <field name="overlay_image"/> -->
+    <!-- <label name="view_name_func"/> -->
+    <!-- <field name="view_name_func"/> -->
 
       <!-- <page name="large-preview" col="2" string="Large view"> -->
         <!-- <separator id="thumbnail" string="Image full" colspan="2"/> -->

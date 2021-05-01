@@ -8,6 +8,7 @@ this repository contains the full copyright notices and license terms. -->
     <field name="full_name"/> 
     <field name="token_issued"/>
     <field name="token_used"/> 
+    <field name="app_ver"/>
     <field name="user_id"/> 
     <field name="login_result"/> 
 </tree>

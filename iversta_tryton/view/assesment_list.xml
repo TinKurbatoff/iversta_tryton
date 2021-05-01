@@ -8,7 +8,7 @@ this repository contains the full copyright notices and license terms. -->
     <field name="check_in_out"/>
     <!--field name="VIN"/-->
     <field name="rental_file_num"/>
-    <field name="odosize"/> 
+    <!-- <field name="odosize"/>  -->
     <field name="images_qty"/> 
     <field name="damages_qty"/>
     <!-- <field name="sequence" tree_invisible="1"/> -->

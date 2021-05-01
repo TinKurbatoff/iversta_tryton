@@ -3,18 +3,22 @@
 this repository contains the full copyright notices and license terms. -->
 <form>
     <group id="left" string="" colspan="2" xexpand="0" xfill="1" yfill="1">
-    <label name="login"/>
-    <field name="login"/>
-    <label name="full_name"/> 
-    <field name="full_name"/> 
-    <label name="token_issued"/>
-    <field name="token_issued"/>
-    <label name="token_used"/> 
-    <field name="token_used"/> 
-    <label name="user_id"/> 
-    <field name="user_id"/> 
-    <label name="login_result"/> 
-    <field name="login_result"/> 
+        <label name="login"/>
+        <field name="login"/>
+        <label name="full_name"/> 
+        <field name="full_name"/> 
+        <label name="token_issued"/>
+        <field name="token_issued"/>
+        <label name="token_used"/> 
+        <field name="token_used"/> 
+        <label name="user_id"/> 
+        <field name="user_id"/> 
+        <label name="login_result"/> 
+        <field name="login_result"/> 
+        <label name="app_ver"/> 
+        <field name="app_ver"/> 
+        <label name="device_id"/> 
+        <field name="device_id"/>     
     </group>
 </form>
 
