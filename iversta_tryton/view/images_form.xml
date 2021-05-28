@@ -11,7 +11,7 @@ this repository contains the full copyright notices and license terms. -->
     <field name="rental_file_num"/>
     <label name="date_taken"/> 
     <field name="date_taken" widget="datetime"/> 
-    <notebook colspan="4" yexpand="1" xfill="1" yfill="1">
+    <notebook colspan="4" yexpand="1">
       <page name="small-preview" col="2" string="Small preview">
         <separator id="thumbnail" string="Image thumbnail" colspan="2"/>
         <field name="image_to_compare" help="BEFORE"  widget="image" width="640" height="480" yexpand="1"/>         

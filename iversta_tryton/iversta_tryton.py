@@ -65,8 +65,8 @@ class IverstaAssessments(ModelSQL, ModelView):
 
     @staticmethod
     def default_check_in_out():
-        if len(images)>0:
-            return images[0].check_in_out
+        # if len(images)>0:
+        #     return images[0].check_in_out
         return 'U'
 
     def get_first_image_data(self, name):

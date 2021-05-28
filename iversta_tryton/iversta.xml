@@ -153,7 +153,7 @@ this repository contains the full copyright notices and license terms. -->
             <field name="model">iversta.assessment</field>
             <field name="report_name">iversta.assessment</field>
             <field name="report">iversta_tryton/InspectionReportCard_report.fodt</field>
-            <field name="extension">odt</field>
+            <!-- <field name="extension">fodt</field> -->
         </record>
         <record model="ir.action.keyword" id="report_inspection_keyword">
             <field name="keyword">form_print</field>
@@ -167,10 +167,15 @@ this repository contains the full copyright notices and license terms. -->
             <field name="name">tryton-iversta-icon</field>
             <field name="path">icons/rental-icon-iversta.svg</field>
         </record>
-        <record model="ir.ui.icon" id="id-iversta-menu-icon">
+        <record model="ir.ui.icon" id="id-iversta-menu-icon1">
             <field name="name">cars-iversta-icon</field>
             <field name="path">icons/photos-icon-iversta.svg</field>
         </record>
+        <record model="ir.ui.icon" id="id-iversta-menu-icon2">
+            <field name="name">tryton-party</field>
+            <field name="path">icons/tryton-party.svg</field>
+        </record>
+
 
     <!-- Menus and submenus -->
         <menuitem name="iVersta" sequence="2" id="id-menu-iversta" icon="tryton-iversta-icon"/>

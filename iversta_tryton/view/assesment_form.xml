@@ -22,7 +22,7 @@ this repository contains the full copyright notices and license terms. -->
     <label name="damages_qty"/>
     <field name="damages_qty"/>
     </group>
-     <notebook colspan="4" yexpand="1" xfill="1" yfill="1">
+     <notebook colspan="4" yexpand="1">
       <page name="current-assessment" col="2" string="Current Inspection">
         <separator id="thumbnail" string="All images" colspan="2"/>
         <label name="images"/> 
