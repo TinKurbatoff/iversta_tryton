@@ -1,0 +1,10 @@
+To make it work with Tryton 6+ you may need to create a new table:
+
+ALTER TABLE res_user_device
+ADD COLUMN id SERIAL PRIMARY KEY,
+ADD COLUMN cookie VARCHAR, 
+ALTER COLUMN create_date TYPE TIMESTAMP without time zone USING create_date::timestamp without time zone,
+ADD COLUMN create_uid INTEGER, 
+ADD COLUMN login VARCHAR, 
+ADD COLUMN write_date  TIMESTAMP without time zone NULL,
+ADD COLUMN write_uid INTEGER; 
