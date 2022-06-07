@@ -8,3 +8,25 @@ ADD COLUMN create_uid INTEGER,
 ADD COLUMN login VARCHAR, 
 ADD COLUMN write_date  TIMESTAMP without time zone NULL,
 ADD COLUMN write_uid INTEGER; 
+
+
+ALTER TABLE res_user_login_attempt
+ADD COLUMN device_cookie VARCHAR;
+
+
+ALTER TABLE ir_action
+ADD COLUMN records INTEGER;
+
+ALTER TABLE ir_avatar 
+ADD COLUMN parent TYPE VARCHAR;
+
+CREATE TABLE IF NOT EXISTS ir_ui_view_tree_optional (
+    id SERIAL PRIMARY KEY,
+	create_date TIMESTAMP without time zone,
+	create_uid INTEGER,
+	field VARCHAR,
+    "user" Integer,
+	"value" Integer,
+	view_id Integer,
+	write_date TIMESTAMP without time zone,
+	write_uid INTEGER);
